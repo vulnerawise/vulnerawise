@@ -1,0 +1,9 @@
+decision: "Immediate Action for High EPSS and Public Exploits"
+conditions:
+  - field: "epss.score"
+    operator: ">="
+    value: 0.9
+  - field: "counts.public_exploit_count"
+    operator: ">"
+    value: 5
+outcome: "immediate action - policy 8"
