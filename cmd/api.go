@@ -5,10 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/spf13/cobra"
 	"vulnerawise/pkg/api"
 	"vulnerawise/pkg/config"
 	"vulnerawise/pkg/db"
+
+	"github.com/spf13/cobra"
 )
 
 var serverPort int
@@ -18,7 +19,7 @@ var serverCmd = &cobra.Command{
 	Short: "Start the API server",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		// Initialize the database.
-		if err := db.Init(config.GetDBPath(), true); err != nil {
+		if err := db.Init(config.GetDBPath()); err != nil {
 			return fmt.Errorf("database initialization failed: %w", err)
 		}
 		// Register the API endpoint.
