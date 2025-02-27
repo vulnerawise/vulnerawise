@@ -1,0 +1,193 @@
+openapi: 3.0.0
+info:
+  title: Vulnerawise API
+  version: "1.0.0"
+  description: API for querying CVE vulnerabilities with various filters and pagination.
+paths:
+  /v1/vuln:
+    get:
+      summary: Retrieve vulnerability data
+      description: >
+        Returns vulnerability data filtered by various parameters including CVE IDs,
+        date ranges, description substring, feed (timeline reference source), and more.
+        Supports SQL-level pagination using a human-friendly "page" parameter and a "limit" (max 100).
+      parameters:
+        - name: cve
+          in: query
+          description: Comma-separated list of CVE IDs.
+          required: false
+          schema:
+            type: string
+        - name: published_date_range
+          in: query
+          description: Date range filter in the format "YYYY-MM-DD:YYYY-MM-DD".
+          required: false
+          schema:
+            type: string
+        - name: published
+          in: query
+          description: Filter for CVEs published in a relative time period (e.g., "last 10 days").
+          required: false
+          schema:
+            type: string
+        - name: last_modified
+          in: query
+          description: Filter for CVEs last modified in a relative time period (e.g., "last 30 days") or a date range.
+          required: false
+          schema:
+            type: string
+        - name: maturity
+          in: query
+          description: Filter by exploit maturity (e.g., "active", "weaponized", "poc", "none").
+          required: false
+          schema:
+            type: string
+        - name: severity
+          in: query
+          description: Filter by severity (e.g., "low", "medium", "high").
+          required: false
+          schema:
+            type: string
+        - name: exploit_published
+          in: query
+          description: Filter by the published date of associated exploit data (e.g., "last 7 days").
+          required: false
+          schema:
+            type: string
+        - name: description
+          in: query
+          description: Filter by a substring in the description.
+          required: false
+          schema:
+            type: string
+        - name: feed
+          in: query
+          description: Filter by timeline reference source (e.g., "metasploit").
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination (default is 1).
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of records per page (maximum 100, default is 100).
+          required: false
+          schema:
+            type: integer
+            default: 100
+            maximum: 100
+      responses:
+        '200':
+          description: Successful response with vulnerability data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metadata:
+                    type: object
+                    properties:
+                      timestamp:
+                        type: string
+                        format: date-time
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        cve:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: CVE identifier.
+                            description:
+                              type: string
+                              description: CVE description.
+                            metadata:
+                              type: object
+                              properties:
+                                publishedDate:
+                                  type: string
+                                  description: Date when the CVE was published.
+                                lastModifiedDate:
+                                  type: string
+                                  description: Date when the CVE was last modified.
+                                confidenceLevel:
+                                  type: string
+                                  description: Confidence level assigned to the CVE.
+                                severity:
+                                  type: string
+                                  description: Severity rating of the CVE.
+                            impact:
+                              type: object
+                              properties:
+                                cisa_kev:
+                                  type: boolean
+                                  description: Indicates if the CVE is marked as CISA KEV.
+                                reported_exploited:
+                                  type: boolean
+                                  description: Indicates if the CVE is reported as exploited.
+                                exploit_maturity:
+                                  type: string
+                                  description: Exploit maturity status.
+                                automatable:
+                                  type: boolean
+                                  description: Indicates if the CVE is automatable.
+                            counts:
+                              type: object
+                              properties:
+                                public_exploit_count:
+                                  type: integer
+                                  description: Number of public exploits or related data.
+                            epss:
+                              type: object
+                              properties:
+                                score:
+                                  type: number
+                                  description: EPSS score.
+                                percentile:
+                                  type: number
+                                  description: EPSS percentile.
+                            metrics:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  vectorString:
+                                    type: string
+                                    description: CVSS vector string.
+                              description: List of CVE metrics.
+                            timeline:
+                              type: object
+                              description: Raw JSON timeline data.
+                example:
+                  metadata:
+                    timestamp: "2025-02-22T15:04:05Z"
+                  data:
+                    - cve:
+                        id: "CVE-2024-12345"
+                        description: "Example vulnerability description."
+                        metadata:
+                          publishedDate: "2024-01-15"
+                          lastModifiedDate: "2024-02-01"
+                          confidenceLevel: "high"
+                          severity: "medium"
+                        impact:
+                          cisa_kev: false
+                          reported_exploited: true
+                          exploit_maturity: "poc"
+                          automatable: false
+                        counts:
+                          public_exploit_count: 2
+                        epss:
+                          score: 3.4
+                          percentile: 85.2
+                        metrics:
+                          - vectorString: "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+                        timeline: {}

@@ -1,0 +1,10 @@
+decision: "Assign Priority Based on Exploitation and Repositories"
+conditions:
+  - field: "impact.exploit_maturity"
+    operator: "=="
+    value: "active"
+  - field: "timeline.repositories"
+    operator: ">="
+    count: true
+    value: 4
+outcome: "high priority - policy 1"
