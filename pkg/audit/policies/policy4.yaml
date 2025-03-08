@@ -1,0 +1,6 @@
+decision: "Assign Priority for Old CVEs with No Exploitation"
+conditions:
+  - field: "impact.exploit_maturity"
+    operator: "=="
+    value: "poc"
+outcome: "low priority - policy 4"

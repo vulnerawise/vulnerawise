@@ -1,0 +1,9 @@
+decision: "Assign Priority for PoC Exploits that are automatable"
+conditions:
+  - field: "impact.automatable"
+    operator: "=="
+    value: true
+  - field: "timeline.references[*].source_type == poc"
+    operator: ">="
+    value: 1
+outcome: "medium priority - policy 3"

@@ -1,0 +1,12 @@
+decision: "PoC code available and it can be automated"
+conditions:
+  - field: "impact.cisa_kev"
+    operator: "=="
+    value: false
+  - field: "impact.exploit_maturity"
+    operator: "=="
+    value: "poc"
+  - field: "impact.automatable"
+    operator: "=="
+    value: true
+outcome: "requires attention - policy 6"

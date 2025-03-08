@@ -1,0 +1,6 @@
+decision: "Remediation Policy for Active Exploits"
+conditions:
+  - field: "impact.exploit_maturity"
+    operator: "=="
+    value: "active"
+outcome: "remediate now - policy7"

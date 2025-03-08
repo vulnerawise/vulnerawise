@@ -1,0 +1,7 @@
+decision: "Assign Priority Based on Total Repository Stars"
+conditions:
+  - field: "timeline.repositories[*].stars"
+    operator: ">="
+    sum: true
+    value: 1
+outcome: "elevated priority - policy 5"
