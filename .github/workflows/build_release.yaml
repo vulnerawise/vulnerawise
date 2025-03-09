@@ -53,7 +53,18 @@ jobs:
         run: |
           mkdir release
           for file in bin/*/*; do
-            mv "$file" "release/$(basename $file)"
+            filename=$(basename $file)
+            if [[ $filename == *windows* ]]; then
+              # Add .exe extension to Windows builds if not already there
+              if [[ $filename != *.exe ]]; then
+                mv "$file" "release/${filename}.exe"
+              else
+                mv "$file" "release/${filename}"
+              fi
+            else
+              # Non-Windows builds
+              mv "$file" "release/${filename}"
+            fi
           done
 
       - name: Create GitHub Release
