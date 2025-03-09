@@ -591,6 +591,15 @@ FROM BaseQuery bq
 
 	// Then conditionally add the ORDER BY clause:
 	if opts.Trending {
+		// For trending CVEs, add a filter for last 3 months
+		timeThreshold := time.Now().AddDate(0, -12, 0).Format("2006-01-02 15:04:05")
+
+		// Check if we need to add WHERE or AND
+		if outerWhereClause == "" {
+			finalQuery += " WHERE bq.published_date >= ?"
+		}
+		args = append(args, timeThreshold)
+
 		finalQuery += " ORDER BY trending_score DESC"
 	} else {
 		finalQuery += " ORDER BY published_date DESC"
