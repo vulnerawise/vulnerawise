@@ -17,7 +17,7 @@ func TrendingCVEs(db *sql.DB, limit, offset int) ([]vulnerability.Record, error)
 		Trending: true,
 	}
 
-	records, err := search.SearchCVEs(db, opts)
+	records, _, err := search.SearchCVEs(db, opts)
 	if err != nil {
 		return nil, fmt.Errorf("trending query failed: %w", err)
 	}

@@ -70,9 +70,17 @@ func PrintTableFromJSON(jsonData []byte) error {
 	table.SetHeader([]string{"CVE ID", "DESCRIPTION", "SEVERITY", "EXPLOIT MATURITY", "CONFIDENCE", "EPSS"})
 	table.SetBorder(true)
 	table.SetCenterSeparator("|")
-	table.SetAutoWrapText(false)
+	table.SetAutoWrapText(true)
 	table.SetRowLine(true) // Add line separators between CVEs
-	table.SetColWidth(descWidth)
+
+	// Set minimum width for each column individually
+	table.SetColMinWidth(0, cveIDWidth)
+	table.SetColMinWidth(1, descWidth)
+	table.SetColMinWidth(2, severityWidth)
+	table.SetColMinWidth(3, maturityWidth)
+	table.SetColMinWidth(4, confidenceWidth)
+	table.SetColMinWidth(5, epssWidth)
+
 	table.SetColumnAlignment([]int{
 		tablewriter.ALIGN_CENTER,
 		tablewriter.ALIGN_LEFT,

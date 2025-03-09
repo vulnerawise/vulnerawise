@@ -237,9 +237,9 @@ func isNumeric(s string) bool {
 
 // SearchCVEs executes a query that retrieves CVE records along with associated metrics, timeline, and severity,
 // using dynamic search options while employing your fixed query.
-func SearchCVEs(db *sql.DB, opts *search.SearchOptions) ([]vulnerability.Record, error) {
+func SearchCVEs(db *sql.DB, opts *search.SearchOptions) ([]vulnerability.Record, int, error) {
 	if opts == nil {
-		return nil, fmt.Errorf("search options cannot be nil")
+		return nil, 0, fmt.Errorf("search options cannot be nil")
 	}
 
 	// Build two sets of filtering conditions.
@@ -614,11 +614,12 @@ FROM BaseQuery bq
 
 	rows, err := db.Query(finalQuery, args...)
 	if err != nil {
-		return nil, fmt.Errorf("query execution failed: %w", err)
+		return nil, 0, fmt.Errorf("query execution failed: %w", err)
 	}
 	defer rows.Close()
 
 	var results []vulnerability.Record
+	var totalCount int
 
 	for rows.Next() {
 		var v vulnerability.Record
@@ -648,12 +649,12 @@ FROM BaseQuery bq
 			&totalRecords,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("failed to scan row: %w", err)
+			return nil, 0, fmt.Errorf("failed to scan row: %w", err)
 		}
 
-		// Print the total count from the first row
-		if totalRecords.Valid && len(results) == 0 { // Only print once, when processing first row
-			fmt.Printf("Total matching records: %d\n", totalRecords.Int64)
+		// In your row scanning loop, store the first total_records value you see
+		if totalRecords.Valid && totalCount == 0 {
+			totalCount = int(totalRecords.Int64)
 		}
 
 		if metrics.Valid {
@@ -710,9 +711,9 @@ FROM BaseQuery bq
 		}
 
 		if err = rows.Err(); err != nil {
-			return nil, fmt.Errorf("rows error: %w", err)
+			return nil, 0, fmt.Errorf("rows error: %w", err)
 		}
 	}
 
-	return results, nil
+	return results, totalCount, nil
 }

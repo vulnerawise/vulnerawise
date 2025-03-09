@@ -224,7 +224,7 @@ func VulnHandler(w http.ResponseWriter, r *http.Request) {
 	sqlDB := db.Get()
 
 	// Execute the search query (no caching) with SQL-level pagination.
-	results, err := search.SearchCVEs(sqlDB, opts)
+	results, _, err := search.SearchCVEs(sqlDB, opts)
 	if err != nil {
 		log.Println("Error executing search query:", err)
 		http.Error(w, "Search error: "+err.Error(), http.StatusInternalServerError)
