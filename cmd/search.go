@@ -130,7 +130,7 @@ var searchCmd = &cobra.Command{
 		}
 
 		// Execute the search query.
-		results, totalRecords, err := search.SearchCVEs(sqlDB, &opts)
+		results, _, err := search.SearchCVEs(sqlDB, &opts)
 		if err != nil {
 			return fmt.Errorf("search query failed: %w", err)
 		}
