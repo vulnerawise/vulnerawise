@@ -6,6 +6,6 @@ type Reference struct {
 	URL         string `json:"url"`
 	SourceType  string `json:"source_type"`
 	Source      string `json:"source"`
-	Description string `json:"description"`
+	Description string `json:"description,omitempty"`
 	Published   string `json:"published"`
 }
