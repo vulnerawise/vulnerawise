@@ -27,7 +27,7 @@ jobs:
       - name: Pull code from private repository
         run: |
           git clone ${{ secrets.PRIVATE_REPO_URL }}
-          cd private-repo
+          cd cli
           # Add any additional commands to prepare the code
 
       - name: Set up Go
