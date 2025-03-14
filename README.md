@@ -1,1 +1,1 @@
-# vulnerawise version v0.1
+# vulnerawise version v0.1.1
