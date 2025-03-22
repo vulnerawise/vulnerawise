@@ -61,8 +61,4 @@ vulnerawise serve
 
 ## Version
 
-Current version: v0.1.1
-
-## License
-
-This project is available under the [MIT License](LICENSE).
+Current version: v0.1
