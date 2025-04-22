@@ -19,11 +19,11 @@ Download precompiled binaries for your platform:
 
 ```bash
 # Linux (amd64)
-curl -L -o ./vulnerawise https://github.com/vulnerawise/vulnerawise/releases/download/v0.1/vulnerawise-linux-amd64
+curl -L -o ./vulnerawise https://api.vulnerawise.ai/vulnerawise-linux-amd64
 chmod +x ./vulnerawise
 
 # macOS (arm64)
-curl -L -o ./vulnerawise https://github.com/vulnerawise/vulnerawise/releases/download/v0.1/vulnerawise-darwin-arm64
+curl -L -o ./vulnerawise https://api.vulnerawise.ai/vulnerawise-darwin-arm64
 chmod +x ./vulnerawise
 ```
 
@@ -40,25 +40,31 @@ vulnerawise audit trivy-report.json
 
 # Check trending vulnerabilities
 vulnerawise trending --limit 10
-
-# Start the API server
-vulnerawise serve
 ```
 
 ## Documentation
 
-- [CLI Guide](docs/cli.md) - Complete command reference
+- [Install Guide](docs/install.md) - Complete command reference
 - [Search Syntax](docs/search.md) - Advanced search capabilities
-- [Audit & Policy Evaluation](docs/audit.md) - Vulnerability auditing system
+- [Check & Policy Evaluation](docs/check.md) - Vulnerability check system
 - [API Documentation](docs/api.md) - REST API endpoints and usage
+- [Exporting CVE Data](docs/export.md)
+- [Viewing Trending CVEs](docs/trending.md)
 
 ## Example Use Cases
 
-- **Vulnerability Prioritization** - Focus on vulnerabilities actively being exploited
-- **Security Compliance** - Audit systems against organization security policies
-- **Threat Intelligence** - Track trends in vulnerability exploitation
-- **DevSecOps Integration** - Use the API to integrate with CI/CD pipelines
+### Key Features
+	•	Exploit maturity: none, poc, active
+	•	Component-level context with fix versions
+	•	SSVC-based prioritization (immediate, schedule, defer)
+	•	Exposure and impact reasoning
+	•	Lightweight CLI and fast API
+	•	No login required, ready for air-gapped use
 
-## Version
-
-Current version: v0.1
+### Example Use Cases
+	•	Vulnerability Prioritization – Focus remediation on vulnerabilities that are actively being exploited in the wild
+	•	Security Compliance – Audit internal systems and assets against threat-informed security policies and patch SLAs
+	•	Threat Intelligence – Track exploitation trends across CVEs, CWEs, and attacker TTPs for better situational awareness
+	•	DevSecOps Integration – Use the CLI or API to embed threat-aware triage into CI/CD pipelines and code security gates
+	•	Security Operations (SOC) – Enrich SIEM/SOAR alerts with exploit context to reduce alert fatigue and speed up response
+	•	Government CERTs & Agencies – Monitor public sector exposure, automate patch guidance, and inform national cyber response
