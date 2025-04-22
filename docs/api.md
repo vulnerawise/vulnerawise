@@ -4,63 +4,6 @@ The Vulnerawise API provides access to vulnerability data filtered by various cr
 
 ---
 
-## Installation
-
-Ensure that you have downloaded and installed the tool properly. If needed, make sure to include the binary in your system's `$PATH` for easy access.
-
-You can download precompiled binaries for your platform from the Vulnerawise GitHub Releases. Here are examples for several platforms:
-
-### Linux (amd64 and arm64)
-
-For **Linux (amd64)**:
-
-```bash
-curl -L -o ./vulnerawise https://github.com/vulnerawise/vulnerawise/releases/download/v0.1/vulnerawise-linux-amd64
-chmod +x ./vulnerawise
-```
-
-For **Linux (arm64)**:
-
-```bash
-curl -L -o ./vulnerawise https://github.com/vulnerawise/vulnerawise/releases/download/v0.1/vulnerawise-linux-arm64
-chmod +x ./vulnerawise
-```
-
-### macOS (Darwin)
-
-For **macOS (amd64)**:
-
-```bash
-curl -L -o ./vulnerawise https://github.com/vulnerawise/vulnerawise/releases/download/v0.1/vulnerawise-darwin-amd64
-chmod +x ./vulnerawise
-```
-
-For **macOS (arm64)**:
-
-```bash
-curl -L -o ./vulnerawise https://github.com/vulnerawise/vulnerawise/releases/download/v0.1/vulnerawise-darwin-arm64
-chmod +x ./vulnerawise
-```
-
-### Windows
-
-For **Windows (amd64)** and **Windows (arm64)**, download the appropriate binary from the releases page.
-
----
-
-## Starting the API Server
-
-Once you have downloaded the appropriate binary, you can start the API server with the following command:
-
-```bash
-./vulnerawise serve
-```
-
-By default, the API runs on port 8080. You can specify a different port using the `--port` flag:
-```bash
-./vulnerawise serve --port 3000
-```
-
 ## API Endpoints
 
 ### Health Check
@@ -158,7 +101,7 @@ GET /v1/vuln?weaponized=true
 
 #### Audit Individual CVEs
 ```
-GET /v1/audit
+GET /v1/check
 ```
 
 Audit a specific CVE against security policies.
@@ -174,22 +117,41 @@ Audit a specific CVE against security policies.
 #### Example Request
 
 ```
-GET /v1/audit?cve=CVE-2023-4966&impact=high&exposure=open
+GET /v1/check?cve=CVE-2023-4966,CVE-2025-0655&impact=high&exposure=open
 ```
 
 #### Response Format
 
 ```json
 {
-  "cve_id": "CVE-2023-4966",
-  "decision": "immediate",
-  "reasoning": "Active exploitation in the wild, high severity impact with open exposure"
+  "passed": false,
+  "results": {
+    "CVE-2023-4966": {
+      "cve_id": "CVE-2023-4966",
+      "decision": {
+        "decision": "immediate",
+        "enforced": true,
+        "passed_all": false,
+        "policy": "ssvc-immediate-policy"
+      }
+    },
+    "CVE-2025-0655": {
+      "cve_id": "CVE-2025-0655",
+      "decision": {
+        "decision": "immediate",
+        "enforced": true,
+        "passed_all": false,
+        "policy": "ssvc-immediate-policy"
+      }
+    }
+  },
+  "timestamp": "2025-03-23T17:08:20Z"
 }
 ```
 
 #### Upload Scanner Reports
 ```
-POST /v1/audit
+POST /v1/check
 ```
 
 Upload vulnerability scanner output (like Trivy, Grype) for policy evaluation.
@@ -203,10 +165,10 @@ The request body should contain the raw JSON output from a supported vulnerabili
 You can pipe Trivy scan results directly to the API:
 
 ```bash
-trivy repository github.com/ralvares/santa --format json | curl -X POST \ 
+trivy repository github.com/ralvares/santa --format json | curl -X POST \
   -H "Content-Type: application/json" \
   -d @- \
-  https://api.vulnerawise.ai/v1/audit
+  http://localhost:8080/v1/check
 ```
 
 ##### Response Format
