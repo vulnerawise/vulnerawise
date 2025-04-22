@@ -13,43 +13,14 @@ Vulnerawise is a comprehensive tool designed to help security professionals sear
 - **Trending Analysis** - Identify which vulnerabilities are actively being exploited
 - **Multiple Output Formats** - Export results as JSON, CSV, or formatted tables
 
-## Installation
-
-Download precompiled binaries for your platform:
-
-```bash
-# Linux (amd64)
-curl -L -o ./vulnerawise https://api.vulnerawise.ai/vulnerawise-linux-amd64
-chmod +x ./vulnerawise
-
-# macOS (arm64)
-curl -L -o ./vulnerawise https://api.vulnerawise.ai/vulnerawise-darwin-arm64
-chmod +x ./vulnerawise
-```
-
-See [CLI documentation](docs/cli.md) for more installation options.
-
-## Quick Start
-
-```bash
-# Search for active high-severity vulnerabilities
-vulnerawise search --maturity active --severity high
-
-# Audit a vulnerability scanner report
-vulnerawise audit trivy-report.json
-
-# Check trending vulnerabilities
-vulnerawise trending --limit 10
-```
-
 ## Documentation
 
-- [Install Guide](docs/install.md) - Complete command reference
-- [Search Syntax](docs/search.md) - Advanced search capabilities
-- [Check & Policy Evaluation](docs/check.md) - Vulnerability check system
-- [API Documentation](docs/api.md) - REST API endpoints and usage
-- [Exporting CVE Data](docs/export.md)
-- [Viewing Trending CVEs](docs/trending.md)
+- [Install Guide](docs/install.md) - Step-by-step instructions for installing Vulnerawise on your system.
+- [Search Syntax](docs/search.md) - Detailed guide to advanced search filters, operators, and query examples.
+- [Check & Policy Evaluation](docs/check.md) - How to use SSVC-based checks and enforce security policies on vulnerabilities.
+- [API Documentation](docs/api.md) - Reference for all REST API endpoints, authentication, and integration tips.
+- [Exporting CVE Data](docs/export.md) - Export vulnerability search results or audit findings in multiple formats for reporting or automation.
+- [Viewing Trending CVEs](docs/trending.md) - Learn to identify, monitor, and analyze vulnerabilities that are trending or under active exploitation.
 
 ## Example Use Cases
 
@@ -59,7 +30,6 @@ vulnerawise trending --limit 10
 	•	SSVC-based prioritization (immediate, schedule, defer)
 	•	Exposure and impact reasoning
 	•	Lightweight CLI and fast API
-	•	No login required, ready for air-gapped use
 
 ### Example Use Cases
 	•	Vulnerability Prioritization – Focus remediation on vulnerabilities that are actively being exploited in the wild
