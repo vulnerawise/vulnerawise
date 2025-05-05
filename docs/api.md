@@ -33,6 +33,7 @@ GET /v1/vuln
 | kev                     | boolean | Filter by CISA KEV catalog                          | true                               |
 | ransomware              | boolean | Filter by ransomware usage                          | true                               |
 | weaponized              | boolean | Filter for vulnerabilities with weaponized exploits | true                               |
+| cwe                     | string  | Filter by CWE (e.g., CWE-79 or comma-separated list) | CWE-79,CWE-89                     |
 | page                    | integer | Page number for pagination                          | 1                                  |
 | limit                   | integer | Results per page (max 100)                          | 50                                 |
 
@@ -56,6 +57,16 @@ GET /v1/vuln?ransomware=true&severity=critical
 Search for weaponized vulnerabilities:
 ```
 GET /v1/vuln?weaponized=true
+```
+
+Search for vulnerabilities by CWE:
+```
+GET /v1/vuln?cwe=CWE-79
+```
+
+Search for multiple CWEs and combine with other filters:
+```
+GET /v1/vuln?cwe=CWE-79,CWE-89&severity=high&kev=true
 ```
 
 #### Response Format
@@ -246,6 +257,15 @@ curl "http://localhost:8080/v1/vuln?ransomware=true"
 
 # Search with multiple filters
 curl "http://localhost:8080/v1/vuln?description=apache&maturity=active&published=last%2030%20days"
+
+# Search for vulnerabilities by CWE
+curl "http://localhost:8080/v1/vuln?cwe=CWE-79"
+
+# Search for multiple CWEs and high severity
+curl "http://localhost:8080/v1/vuln?cwe=CWE-79,CWE-89&severity=high"
+
+# Combine CWE with CISA KEV
+curl "http://localhost:8080/v1/vuln?cwe=CWE-79&kev=true"
 ```
 
 ### Using Python
@@ -277,6 +297,16 @@ response = requests.get(
 
 results = response.json()
 print(json.dumps(results, indent=2))
+
+# Search for vulnerabilities by CWE
+response = requests.get(
+    'http://localhost:8080/v1/vuln',
+    params={
+        'cwe': 'CWE-79',
+        'severity': 'high'
+    }
+)
+print(json.dumps(response.json(), indent=2))
 ```
 
 

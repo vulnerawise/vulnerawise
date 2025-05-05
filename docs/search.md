@@ -204,10 +204,28 @@ vulnerawise search --cisa-kev --published "last 30 days"
 vulnerawise search --cisa-kev --severity critical
 ```
 
+## CWE Filter
+
+You can filter vulnerabilities by CWE (Common Weakness Enumeration) using the `--cwe` flag. This accepts a single CWE (e.g., `--cwe CWE-79`) or a comma-separated list (e.g., `--cwe CWE-79,CWE-89`).
+
+Example:
+
+```bash
+# Find vulnerabilities related to XSS (CWE-79)
+vulnerawise search --cwe CWE-79
+
+# Find vulnerabilities for multiple CWEs (XSS and SQL Injection)
+vulnerawise search --cwe CWE-79,CWE-89
+
+# Combine with other filters
+vulnerawise search --cwe CWE-79 --severity high --published "last 30 days"
+```
+
 ## Additional Filters
 
 Other filters available include:
 
+- `--cwe`: Filter by CWE (e.g., `CWE-79` or comma-separated list)
 - `--epss`: Filter by EPSS score percentage (e.g., `>=50`, `<30`, `=70`)
 - `--exploit-published`: Filter CVEs by the published date of associated exploit data (e.g., `last 7 days`, `last 24 hours`)
 - `--last-modified`: Filter by last modified date (e.g., `last 7 days` or `YYYY-MM-DD:YYYY-MM-DD`)
