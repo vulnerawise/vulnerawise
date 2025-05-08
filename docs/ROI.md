@@ -29,6 +29,14 @@ Security and development teams often receive thousands of vulnerability findings
 
 ## The Hidden Cost of Vulnerability Triage
 
+### Monthly Triage Volume
+
+In an organization with 100+ applications, it's typical to identify around **600 new CVEs per month** across container images and dependencies. These must be:
+
+* Validated
+* Prioritized
+* Assigned for remediation
+
 ### Time Per Vulnerability
 
 Industry data shows:
@@ -42,14 +50,12 @@ Industry data shows:
 * Based on AppSec engineer rates (\$50–\$100/hr)
 * **Source:** Ponemon + Rezilion; MITRE DevSecOps Cost Models
 
-> A team handling 1,000 CVEs/month could spend **250–500 hours** just triaging, costing **\$25,000+** per month in labor.
+### Monthly Manual Triage Cost
 
-### Triage Volume in the Real World
+* 600 CVEs × 15 minutes avg × \$75/hr = **\$11,250 per month**
+* Annually: **\$135,000 in triage time alone**
 
-* Mid-sized dev teams (\~100 devs) often generate 900+ findings/month
-* False positive rates range from 35% to 50%
-* Most orgs remediate only 5–10% of open vulns per month
-* **Sources:** Cyentia Institute; Kenna Security; Rezilion; Phoenix Security
+> These costs scale linearly and do not include remediation, re-testing, or coordination.
 
 ---
 
@@ -77,25 +83,25 @@ Decision: Immediate
 
 ## ROI: Triage and Prioritization Efficiency
 
-### Baseline: Manual Process (per 47 components)
+### Monthly Manual Triage (600 CVEs)
 
-* Triage time: 47 hours
-* Remediation planning: 235 hours
-* Total: 282 hours @ \$62.50/hr = \$17,625
+* Triage time: 150 hours
+* Cost: 150 hours × \$75/hr = **\$11,250**
 
 ### With Vulnerawise
 
-* Triage: 0 hours
-* Remediation planning: 235 hours (same fix effort)
-* Total: \$14,687.50
+* Triage time reduced by 90%
+* New triage time: 15 hours
+* New cost: 15 hours × \$75/hr = **\$1,125**
 
 ### Savings
 
-* **Time saved:** 47 hours
-* **Cost saved:** \$2,937.50
-* **ROI:** 20% from triage automation alone
+* **Time saved:** 135 hours
+* **Cost saved:** \$10,125
+* **Annualized savings:** **\$121,500**
+* **ROI:** 9x return on triage labor alone
 
-> Scale this to 1,000+ components per year: \$60K+ in savings and a faster response to real threats.
+> These savings do not include indirect ROI from faster remediation, reduced risk exposure, and fewer analyst hires.
 
 ---
 
@@ -116,7 +122,7 @@ Manual vulnerability triage is expensive, inefficient, and unsustainable at scal
 
 * Focus on the 10% of vulnerabilities that truly matter
 * Fix what matters first, with confidence
-* Cut triage costs by 30–60%
+* Cut triage costs by 30–90%
 * Reduce time to remediation
 * Improve security posture with real-world risk context
 
